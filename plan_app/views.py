@@ -23,4 +23,12 @@ class Plans(APIView):
         )
         return Response(serializer.data)
         
+    def post(self, request):
+        
+        serializer = serializers.PlanSerializer(data=request.data)
+        if serializer.is_valid():
+            plan = serializer.save()
+            return Response(serializers.PlanSerializer(plan).data)
+        else:
+            return Response(serializer.errors)
         
