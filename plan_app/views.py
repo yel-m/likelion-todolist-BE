@@ -1,6 +1,7 @@
 from django.utils import timezone
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.exceptions import NotFound
 from .models import Plan
 from . import serializers
 
@@ -31,4 +32,28 @@ class Plans(APIView):
             return Response(serializers.PlanSerializer(plan).data)
         else:
             return Response(serializer.errors)
+
+class PlanDetail(APIView):
+    
+    permission_classes = [IsAuthenticated]
+    
+    def get_object(self, id):
+        try:
+            return Plan.objects.get(id=id)
+        except Plan.DoesNotExist:
+            raise NotFound
+    
+    def put(self, request, id):
+        plan = self.get_object(id)
         
+        serializer = serializers.PlanSerializer(
+            plan,
+            data=request.data,
+            partial=True,
+        )
+        
+        if serializer.is_valid():
+            updated_plan = serializer.save()
+            return Response(serializers.PlanSerializer(updated_plan).data)
+        else:
+            return Response(serializer.errors)
