@@ -63,3 +63,27 @@ class PlanDetail(APIView):
         plan = self.get_object(id)
         plan.delete()
         return Response(status=HTTP_204_NO_CONTENT)
+    
+
+class PlanCheck(APIView):
+    
+    permission_classes = [IsAuthenticated]
+    
+    def get_object(self, id):
+        try:
+            return Plan.objects.get(id=id)
+        except Plan.DoesNotExist:
+            raise NotFound
+    
+    def put(self, request, id):
+        plan = self.get_object(id=id)
+        serializer = serializers.PlanSerializer(
+            plan,
+            data=request.data,
+            partial=True
+        )
+        if serializer.is_valid():
+            updated_plan = serializer.save()
+            return Response(serializers.PlanSerializer(updated_plan).data)
+        else:
+            return Response(serializer.errors)
