@@ -2,6 +2,7 @@ from django.utils import timezone
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
+from rest_framework.status import HTTP_204_NO_CONTENT
 from .models import Plan
 from . import serializers
 
@@ -57,3 +58,8 @@ class PlanDetail(APIView):
             return Response(serializers.PlanSerializer(updated_plan).data)
         else:
             return Response(serializer.errors)
+        
+    def delete(self, request, id):
+        plan = self.get_object(id)
+        plan.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
