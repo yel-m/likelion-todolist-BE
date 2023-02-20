@@ -17,9 +17,10 @@ class Plans(APIView):
         except ValueError:
             month = now
         all_plans = Plan.objects.filter(date__month=month)
-        serializer = serializers.PlanListSerializer(
+        serializer = serializers.PlanSerializer(
             all_plans,
             many=True,
         )
         return Response(serializer.data)
+        
         
