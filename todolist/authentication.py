@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class CustomAuthentication(BaseAuthentication):
     
     def authenticate(self, request):
-        username = request.data.get('username')
+        username = request.headers.get('username')
         if not username:
             return None
         try:
