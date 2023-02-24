@@ -1,9 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Plan(models.Model):
     
     """Plan Model Definition"""
     
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField()
     content = models.TextField()
     isChecked = models.BooleanField(default=False)

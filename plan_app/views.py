@@ -18,7 +18,7 @@ class Plans(APIView):
             month = int(month)
         except ValueError:
             month = now
-        all_plans = Plan.objects.filter(date__month=month)
+        all_plans = Plan.objects.filter(date__month=month, user=request.user)
         serializer = serializers.PlanSerializer(
             all_plans,
             many=True,
@@ -29,7 +29,9 @@ class Plans(APIView):
         
         serializer = serializers.PlanSerializer(data=request.data)
         if serializer.is_valid():
-            plan = serializer.save()
+            plan = serializer.save(
+                user=request.user
+            )
             return Response(serializers.PlanSerializer(plan).data)
         else:
             return Response(serializer.errors)
@@ -38,14 +40,14 @@ class PlanDetail(APIView):
     
     permission_classes = [IsAuthenticated]
     
-    def get_object(self, id):
+    def get_object(self, id, user):
         try:
-            return Plan.objects.get(id=id)
+            return Plan.objects.get(id=id, user=user)
         except Plan.DoesNotExist:
             raise NotFound
     
     def put(self, request, id):
-        plan = self.get_object(id)
+        plan = self.get_object(id, request.user)
         
         serializer = serializers.PlanSerializer(
             plan,
@@ -60,7 +62,7 @@ class PlanDetail(APIView):
             return Response(serializer.errors)
         
     def delete(self, request, id):
-        plan = self.get_object(id)
+        plan = self.get_object(id, request.user)
         plan.delete()
         return Response(status=HTTP_204_NO_CONTENT)
     
@@ -76,7 +78,7 @@ class PlanCheck(APIView):
             raise NotFound
     
     def put(self, request, id):
-        plan = self.get_object(id=id)
+        plan = self.get_object(id, request.user)
         serializer = serializers.PlanSerializer(
             plan,
             data=request.data,
@@ -99,7 +101,7 @@ class PlanReview(APIView):
             raise NotFound
     
     def put(self, request, id):
-        plan = self.get_object(id=id)
+        plan = self.get_object(id, request.user)
         serializer = serializers.PlanSerializer(
             plan,
             data=request.data,
