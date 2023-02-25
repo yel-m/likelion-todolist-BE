@@ -1,7 +1,8 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ParseError, NotFound
+from rest_framework.permissions import IsAuthenticated
 from . import serializers
 
 class Users(APIView):
@@ -35,3 +36,10 @@ class LogIn(APIView):
         else:
             return Response({"error": "비밀번호 또는 유저네임이 잘못되었습니다."})
         
+class LogOut(APIView):
+    
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        logout(request)
+        return Response({"ok": "bye!"})
