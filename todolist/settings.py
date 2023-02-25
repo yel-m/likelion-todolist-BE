@@ -131,3 +131,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication'
     ]
 }
+
+ALLOWED_HOSTS = [
+    '.ap-northeast-2.compute.amazonaws.com'
+]
