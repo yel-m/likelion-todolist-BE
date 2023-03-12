@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-n*ov5dxo*toy0(x09vkifp11+8f9h*8k81b-l5an!u+)^a8cla
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '.ap-northeast-2.compute.amazonaws.com',
+    '.likelion-ssu-todolist.shop',
+]
 
 
 # Application definition
@@ -133,8 +136,3 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication'
     ]
 }
-
-ALLOWED_HOSTS = [
-    '.ap-northeast-2.compute.amazonaws.com',
-    '.likelion-ssu-todolist.shop',
-]
