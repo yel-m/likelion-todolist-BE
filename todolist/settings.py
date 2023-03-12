@@ -136,4 +136,5 @@ REST_FRAMEWORK = {
 
 ALLOWED_HOSTS = [
     '.ap-northeast-2.compute.amazonaws.com',
+    '.likelion-ssu-todolist.shop',
 ]
