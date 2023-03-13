@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '.ap-northeast-2.compute.amazonaws.com',
     '.likelion-ssu-todolist.shop',
+    '127.0.0.1'
 ]
 
 
