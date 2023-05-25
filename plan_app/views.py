@@ -58,7 +58,7 @@ class PlanDetail(APIView):
         except Plan.DoesNotExist:
             raise NotFound
     
-    def put(self, request, username, id):
+    def patch(self, request, username, id):
         user = self.get_user(username)
         plan = self.get_object(id, user)
         
@@ -95,7 +95,7 @@ class PlanCheck(APIView):
         except Plan.DoesNotExist:
             raise NotFound
     
-    def put(self, request, username, id):
+    def patch(self, request, username, id):
         user = self.get_user(username)
         plan = self.get_object(id, user)
         serializer = serializers.PlanSerializer(
@@ -124,7 +124,7 @@ class PlanReview(APIView):
         except Plan.DoesNotExist:
             raise NotFound
     
-    def put(self, request, username, id):
+    def patch(self, request, username, id):
         user = self.get_user(username)
         plan = self.get_object(id, user)
         serializer = serializers.PlanSerializer(
