@@ -4,8 +4,16 @@ from .models import Plan
 class PlanSerializer(serializers.ModelSerializer):
     
     user = serializers.StringRelatedField(read_only=True)
+    plan_id = serializers.IntegerField(source='id', read_only=True)
     
     class Meta:
         model = Plan
-        fields = "__all__"
+        fields = [
+            'plan_id',
+            'user',
+            'date',
+            'content',
+            'is_checked',
+            'emoji',
+        ]
         
