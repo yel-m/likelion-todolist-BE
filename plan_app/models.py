@@ -6,9 +6,9 @@ class Plan(models.Model):
     """Plan Model Definition"""
     
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField()
+    date = models.DateTimeField()
     content = models.TextField()
-    isChecked = models.BooleanField(default=False)
+    is_checked = models.BooleanField(default=False)
     emoji = models.CharField(
         max_length=1,
         default="",
